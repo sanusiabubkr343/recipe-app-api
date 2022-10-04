@@ -1,0 +1,2 @@
+- id: black
+  exclude: ^.*\b(migrations)\b.*$
