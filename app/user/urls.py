@@ -11,7 +11,6 @@ app_name = "user"
 router = DefaultRouter()
 router.register("", UserViewSet, basename="users")
 
-
 urlpatterns = [
     path("", include(router.urls)),
     path("token/refresh", TokenRefreshView.as_view(), name="token_refresh"),
