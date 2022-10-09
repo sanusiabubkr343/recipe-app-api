@@ -112,7 +112,6 @@ class PrivateRecipeApiTests(TestCase):
         url = reverse("recipe:recipes-list")
         self.user_authenticator()
         response = self.client.post(url, payload)
-        print("checker", response.json())
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         recipe = Recipe.objects.get(id=response.json().get("id"))
@@ -121,4 +120,4 @@ class PrivateRecipeApiTests(TestCase):
 
         self.assertEqual(recipe.user, self.user)
 
-    #todo_ add put,patch and delete test too 
+    # todo_ add put,patch and delete test too
