@@ -1,6 +1,6 @@
 """Views for the recipe API"""
 
-from rest_framework import viewsets, mixins, status
+from rest_framework import viewsets, mixins, status, filters
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from core.models import Recipe, Tag
 from .serializers import (
@@ -9,6 +9,7 @@ from .serializers import (
     TagSerializer,
     RecipeImageSerializer,
 )
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -20,6 +21,13 @@ class RecipeViewSets(viewsets.ModelViewSet):
     serializer_class = RecipeDetailSerializer
     queryset = Recipe.objects.all()
     permission_classes = [IsAuthenticated]
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+    filterset_fields = ["user"]
+    search_fields = ["title", "tags", "user__name", "link"]
 
     def get_queryset(self):
         """Retrieve recipes for authenticated user"""
